@@ -24,9 +24,11 @@ RUN apt-get update && apt-get install wget ca-certificates unzip git bash curl u
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     go get -u github.com/aws/aws-sdk-go/
 
-RUN go get -u github.com/chadgrant/terraform-helpers && \
-    cd /go/src/github.com/chadgrant/terraform-helpers/crypt && go install && \
-    cd /go/src/github.com/chadgrant/terraform-helpers/plan && go install && \
-    cd /go/src/github.com/chadgrant/terraform-helpers/apply && go install
+RUN mkdir -p /go/src/github.com/chadgrant/ && \
+    cd /go/src/github.com/chadgrant/ && git clone https://github.com/chadgrant/terraform-helpers.git && \
+    cd terraform-helpers && \
+    cd   crypt && go install && \
+    cd ../plan && go install && \
+    cd ../apply && go install
 
 COPY modules /terraform/modules/
