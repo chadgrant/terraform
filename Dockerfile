@@ -22,13 +22,16 @@ RUN apt-get update && apt-get install wget ca-certificates unzip git bash curl u
     rm -rf awscli-bundle && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    go get -u github.com/aws/aws-sdk-go/
+    go get -u github.com/aws/aws-sdk-go/ && \
+    go get -u github.com/hashicorp/hcl && \
+    go get -u github.com/hashicorp/terraform
 
 RUN mkdir -p /go/src/github.com/chadgrant/ && \
     cd /go/src/github.com/chadgrant/ && git clone https://github.com/chadgrant/terraform-helpers.git && \
     cd terraform-helpers && \
     cd   crypt && go install && \
     cd ../plan && go install && \
-    cd ../apply && go install
+    cd ../apply && go install && \
+    cd ../tfvars && go install
 
 COPY modules /terraform/modules/
