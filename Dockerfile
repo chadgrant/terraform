@@ -2,13 +2,13 @@ FROM golang:1.7.3
 WORKDIR /terraform/
 VOLUME ["/terraform/plans"]
 ENV TF_LOG=INFO
-ENV TF_LOG_PATH=/terraform.log
+ENV TF_LOG_PATH=/plans/terraform.log
 
 ENV TERRAFORM_VERSION=0.8.1
 ENV TERRAFORM_SHA256SUM=da98894a79b7e97ddcb2a1fed7700d3f53c3660f294fb709e1d52c9baaee5c59
 
-RUN apt-get update && apt-get install wget ca-certificates unzip git bash curl unzip zip netcat-openbsd \
-    mysql-client bash-completion python && \
+RUN apt-get update && apt-get install wget ca-certificates unzip git bash curl \
+    unzip zip netcat-openbsd mysql-client bash-completion python && \
     curl https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip > terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     echo "${TERRAFORM_SHA256SUM}  terraform_${TERRAFORM_VERSION}_linux_amd64.zip" > terraform_${TERRAFORM_VERSION}_SHA256SUMS && \
     sha256sum -c terraform_${TERRAFORM_VERSION}_SHA256SUMS && \
@@ -27,9 +27,10 @@ RUN apt-get update && apt-get install wget ca-certificates unzip git bash curl u
     go get -u github.com/hashicorp/terraform
 
 RUN mkdir -p /go/src/github.com/chadgrant/ && \
-    cd /go/src/github.com/chadgrant/ && git clone https://github.com/chadgrant/terraform-helpers.git && \
+    cd /go/src/github.com/chadgrant/ && \
+    git clone https://github.com/chadgrant/terraform-helpers.git && \
     cd terraform-helpers && \
-    cd   crypt && go install && \
+    cd crypt && go install && \
     cd ../plan && go install && \
     cd ../apply && go install && \
     cd ../tfvars && go install
