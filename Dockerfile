@@ -2,7 +2,7 @@ FROM golang:1.7.3
 WORKDIR /terraform/
 VOLUME ["/terraform/plans"]
 ENV TF_LOG=INFO
-ENV TF_LOG_PATH=/plans/terraform.log
+ENV TF_LOG_PATH=/terraform/plans/terraform.log
 
 ENV TERRAFORM_VERSION=0.8.1
 ENV TERRAFORM_SHA256SUM=da98894a79b7e97ddcb2a1fed7700d3f53c3660f294fb709e1d52c9baaee5c59
