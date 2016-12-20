@@ -54,8 +54,8 @@ resource "aws_alb" "main" {
   }
 
   tags {
-    "credo:environment"  = "${var.environment}"
-    "credo:application"  = "${var.application}"
+    "${var.tag_prefix}:environment"  = "${var.environment}"
+    "${var.tag_prefix}:application"  = "${var.application}"
   }
 }
 

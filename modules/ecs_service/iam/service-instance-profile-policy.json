@@ -31,7 +31,7 @@
       "Sid": "servicecontainer",
       "Effect": "Allow",
       "Action": ["s3:*"],
-      "Resource": "arn:aws:s3:::credo-${aws_region}-${environment}/services/${application}/*"
+      "Resource": "arn:aws:s3:::${bucket}/services/${application}/*"
     }
   ]
 }
