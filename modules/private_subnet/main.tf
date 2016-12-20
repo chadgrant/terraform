@@ -4,6 +4,7 @@ variable "cidrs" {}
 variable "azs" {}
 variable "nat_network_interface_ids" {}
 variable "environment" {}
+variable "team" {}
 variable "tag_prefix" {}
 
 resource "aws_subnet" "private" {
@@ -15,6 +16,7 @@ resource "aws_subnet" "private" {
   tags {
     Name = "${var.name}-${element(split(",", var.azs), count.index)}"
     "${var.tag_prefix}:environment" = "${var.environment}"
+    "${var.tag_prefix}:team" = "${var.team}"
   }
 
   map_public_ip_on_launch = false
@@ -32,6 +34,7 @@ resource "aws_route_table" "private" {
   tags {
     Name = "${var.name}-${element(split(",", var.azs), count.index)}"
     "${var.tag_prefix}:environment" = "${var.environment}"
+    "${var.tag_prefix}:team" = "${var.team}"
   }
 }
 

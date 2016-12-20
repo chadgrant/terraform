@@ -4,6 +4,7 @@ variable "cidrs" {}
 variable "azs" {}
 variable "gateway_id" {}
 variable "environment" {}
+variable "team" {}
 variable "tag_prefix" {}
 
 resource "aws_subnet" "public" {
@@ -15,6 +16,7 @@ resource "aws_subnet" "public" {
   tags {
     Name = "${var.name}-${element(split(",", var.azs), count.index)}"
     "${var.tag_prefix}:environment" = "${var.environment}"
+    "${var.tag_prefix}:team" = "${var.team}"
   }
 
   map_public_ip_on_launch = true
@@ -32,6 +34,7 @@ resource "aws_route_table" "public" {
   tags {
     Name = "${var.name}-${element(split(",", var.azs), count.index)}"
     "${var.tag_prefix}:environment" = "${var.environment}"
+    "${var.tag_prefix}:team" = "${var.team}"
   }
 }
 

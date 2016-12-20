@@ -55,6 +55,7 @@ data "template_file" "service_instance_profile" {
     environment               = "${var.environment}"
     environment_short_name    = "${var.environment_short_name}"
     application               = "${var.application}"
+    bucket                    = "${var.bucket}"
   }
 }
 
