@@ -30,7 +30,7 @@ resource "aws_security_group" "openvpn" {
 
   tags {
     Name = "${var.name}"
-    "credo:environment" = "${var.environment}"
+    "${var.tag_prefix}:environment" = "${var.environment}"
   }
 
   ingress {
