@@ -4,8 +4,8 @@ VOLUME ["/terraform/plans"]
 ENV TF_LOG=INFO
 ENV TF_LOG_PATH=/terraform/plans/terraform.log
 
-ENV TERRAFORM_VERSION=0.8.1
-ENV TERRAFORM_SHA256SUM=da98894a79b7e97ddcb2a1fed7700d3f53c3660f294fb709e1d52c9baaee5c59
+ENV TERRAFORM_VERSION=0.8.4
+ENV TERRAFORM_SHA256SUM=297d35d0b4311445cd87ef032d3dec917bcc7a8b163ead28a4c45d966a2f75cc
 
 RUN apt-get update && apt-get install wget ca-certificates unzip git bash curl \
     unzip zip netcat-openbsd mysql-client bash-completion python && \
