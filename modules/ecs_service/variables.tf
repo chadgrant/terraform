@@ -3,6 +3,7 @@ variable "aws_account"            {}
 variable "aws_region"             {}
 variable "aws_availability_zones" {}
 variable "tag_prefix"             {}
+variable "vpc_cidr"               {}
 variable "dns_zone_id"            {}
 variable "dns_search"             {}
 variable "ssl_arn"                {}

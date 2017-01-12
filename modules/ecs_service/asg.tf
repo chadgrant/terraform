@@ -1,5 +1,5 @@
 data "aws_security_group" "services" {
-  name = "02-${var.environment_short_name}-services"
+  name = "02-${var.environment_short_name}-*"
 
   tags{
     "${var.tag_prefix}:environment" = "${var.environment}"

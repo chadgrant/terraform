@@ -1,12 +1,16 @@
 data "aws_vpc" "current" {
+
+  cidr_block = "${var.vpc_cidr}"
+
   state="available"
+
   tags{
     "${var.tag_prefix}:environment" = "${var.environment}"
   }
 }
 
 data "aws_security_group" "public" {
-  name = "01-${var.environment_short_name}-world"
+  name = "01-${var.environment_short_name}-*"
 
   tags{
     "${var.tag_prefix}:environment" = "${var.environment}"
