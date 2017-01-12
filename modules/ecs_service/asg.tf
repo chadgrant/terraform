@@ -12,7 +12,7 @@ data "aws_subnet" "privates" {
   state             = "available"
 
   tags {
-    "Name" = "${var.environment_short_name}-private-${element(split(",", var.aws_availability_zones), count.index)}"
+    "Name" = "*-private-${element(split(",", var.aws_availability_zones), count.index)}"
   }
 
   count = "${length(split(",", var.aws_availability_zones))}"

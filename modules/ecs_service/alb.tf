@@ -23,7 +23,8 @@ data "aws_subnet" "publics" {
   state             = "available"
 
   tags {
-    "Name" = "${var.environment_short_name}-public-${element(split(",", var.aws_availability_zones), count.index)}"
+    "Name" = "*-public-${element(split(",", var.aws_availability_zones), count.index)}"
+    "${var.tag_prefix}:environment" = "${var.environment}"
   }
 
   count = "${length(split(",", var.aws_availability_zones))}"
