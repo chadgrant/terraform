@@ -15,12 +15,9 @@ variable "dns_zone_id" {}
 variable "environment" {}
 variable "tag_prefix" {}
 
-#warning! these change VERY often
-variable "openvpn_amis" {
-    default = {
-        "us-east-1" = "ami-1a942472"
-        "us-west-2" = "ami-47965927" #2.0.24 hvm
-    }
+data "aws_ami" "openvpn" {
+  most_recent = "true"
+  name = "OpenVPN Access Server"
 }
 
 resource "aws_security_group" "openvpn" {
@@ -64,7 +61,7 @@ resource "aws_security_group" "openvpn" {
 }
 
 resource "aws_instance" "openvpn" {
-  ami           = "${lookup(var.openvpn_amis, var.region)}"
+  ami           = "${data.aws_ami.openvpn.id}"
   instance_type = "${var.instance_type}"
   key_name      = "${var.key_name}"
   subnet_id     = "${var.subnet_id}"
