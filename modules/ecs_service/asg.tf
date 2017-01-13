@@ -1,6 +1,8 @@
 data "aws_security_group" "services" {
   name = "02-${var.environment_short_name}-*"
 
+  vpc_id = "${data.aws_vpc.current.id}"
+
   tags{
     "${var.tag_prefix}:environment" = "${var.environment}"
   }
