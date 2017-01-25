@@ -17,7 +17,7 @@ variable "tag_prefix" {}
 
 data "aws_ami" "openvpn" {
   most_recent = "true"
-  name = "OpenVPN Access Server"
+  name_regex = "OpenVPN Access Server" #(this changed in recent versions from name->name_regex)
 }
 
 resource "aws_security_group" "openvpn" {
