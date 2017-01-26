@@ -51,3 +51,6 @@ variable "dns_prefix"            {}
 variable "container_definitions" { default="" }
 variable "application_vars"      { default="" }
 variable "service_iam_policy"    {}
+
+variable "public_security_group"   {}
+variable "services_security_group" {}

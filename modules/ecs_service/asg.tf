@@ -1,5 +1,5 @@
 data "aws_security_group" "services" {
-  name = "02-${var.environment_short_name}-*"
+  name = "${var.services_security_group}"
 
   vpc_id = "${data.aws_vpc.current.id}"
 
