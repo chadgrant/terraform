@@ -1,5 +1,5 @@
 data "aws_security_group" "services" {
-  name = "02-${var.environment_short_name}-services"
+  name = "${var.security_group_name}"
 
   tags{
     "${var.tag_prefix}:environment" = "${var.environment}"
@@ -21,7 +21,7 @@ resource "aws_db_instance" "api" {
   username                   = "${var.sql_username}"
   password                   = "${var.sql_password}"
   port                       = "${var.sql_port}"
-  db_subnet_group_name       = "${var.environment_short_name}_dbsubnet"
+  db_subnet_group_name       = "${var.db_subnet_group_name}"
   vpc_security_group_ids     = ["${data.aws_security_group.services.id}"]
   backup_retention_period    = "${var.sql_backup_retention_period}"
   publicly_accessible        = false

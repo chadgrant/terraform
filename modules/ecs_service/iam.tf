@@ -4,7 +4,7 @@ data "template_file" "ecs_service_role" {
 }
 
 resource "aws_iam_role" "ecs_service" {
-  name = "${var.environment_short_name}-${var.application}-ecs-role"
+  name = "${var.name}-ecs-role"
 
   assume_role_policy = "${data.template_file.ecs_service_role.rendered}"
 }
@@ -15,7 +15,7 @@ data "template_file" "ecs_service" {
 }
 
 resource "aws_iam_role_policy" "ecs_service" {
-  name = "${var.environment_short_name}-${var.application}-ecs-policy"
+  name = "${var.name}-ecs-policy"
   role = "${aws_iam_role.ecs_service.name}"
 
   policy = "${data.template_file.ecs_service.rendered}"
@@ -31,7 +31,7 @@ resource "aws_iam_role_policy" "ecs_service" {
 
 
 resource "aws_iam_instance_profile" "service" {
-  name  = "${var.environment_short_name}-${var.application}-ecs-instance"
+  name  = "${var.name}-ecs-instance"
   roles = ["${aws_iam_role.service_instance.name}"]
 }
 
@@ -40,7 +40,7 @@ data "template_file" "service_instance" {
 }
 
 resource "aws_iam_role" "service_instance" {
-  name = "${var.environment_short_name}-${var.application}-ecs-instance-role"
+  name = "${var.name}-ecs-instance-role"
 
   assume_role_policy = "${data.template_file.service_instance.rendered}"
 }
@@ -54,13 +54,13 @@ data "template_file" "service_instance_profile" {
     aws_region                = "${var.aws_region}"
     environment               = "${var.environment}"
     environment_short_name    = "${var.environment_short_name}"
-    application               = "${var.application}"
+    service                   = "${var.service}"
     bucket                    = "${var.bucket}"
   }
 }
 
 resource "aws_iam_role_policy" "instance" {
-  name   = "${var.environment_short_name}-${var.application}-ecs-role"
+  name   = "${var.name}-ecs-role"
   role   = "${aws_iam_role.service_instance.name}"
   policy = "${data.template_file.service_instance_profile.rendered}"
 
@@ -70,7 +70,7 @@ resource "aws_iam_role_policy" "instance" {
 }
 
 resource "aws_iam_role_policy" "instance-service" {
-  name   = "${var.environment_short_name}-${var.application}-ecs-service-role"
+  name   = "${var.name}-ecs-service-role"
   role   = "${aws_iam_role.service_instance.name}"
   policy = "${var.service_iam_policy}"
 

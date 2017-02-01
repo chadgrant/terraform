@@ -16,3 +16,5 @@ variable "sql_port"                     { default="3306" }
 variable "sql_backup_retention_period"  {}
 variable "sql_size"                     {}
 variable "sql_multi_az"                 {}
+variable "security_group_name"          { default = "" }
+variable "db_subnet_group_name"         { default = "" }

@@ -17,7 +17,23 @@ variable "tag_prefix" {}
 
 data "aws_ami" "openvpn" {
   most_recent = "true"
-  name_regex = "OpenVPN Access Server" #(this changed in recent versions from name->name_regex)
+
+  filter {
+    name = "name"
+    values = ["OpenVPN Access Server"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["679593333241"]
 }
 
 resource "aws_security_group" "openvpn" {

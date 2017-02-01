@@ -1,9 +1,9 @@
 resource "aws_ecs_cluster" "main" {
-  name = "${var.environment_short_name}-${var.application}"
+  name = "${var.name}"
 }
 
 resource "aws_ecs_service" "service" {
-  name            = "${var.environment_short_name}-${var.application}"
+  name            = "${var.name}"
   cluster         = "${aws_ecs_cluster.main.id}"
   task_definition = "${aws_ecs_task_definition.task.arn}"
   desired_count   = "${var.task_count}"
@@ -11,7 +11,7 @@ resource "aws_ecs_service" "service" {
 
   load_balancer {
     target_group_arn = "${aws_alb_target_group.service.id}"
-    container_name   = "${var.application}"
+    container_name   = "${var.service}"
     container_port   = "${var.container_port}"
   }
 
@@ -22,3 +22,5 @@ resource "aws_ecs_service" "service" {
     "aws_autoscaling_group.service"
   ]
 }
+
+output "autoscaling_group_name" { value = "${aws_autoscaling_group.service.name}" }

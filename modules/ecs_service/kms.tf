@@ -17,13 +17,13 @@ resource "aws_kms_key" "config" {
 }
 
 resource "aws_kms_alias" "alias" {
-    name_prefix = "alias/${var.environment_short_name}-${var.application}"
+    name_prefix = "alias/${var.name}"
     target_key_id = "${aws_kms_key.config.key_id}"
 }
 
 resource "aws_s3_bucket_object" "service_bucket" {
-  key        = "services/${var.application}/config.env"
+  key        = "services/${var.service}/config.env"
   bucket     = "${var.bucket}"
-  content    = "${var.application_vars}"
+  content    = "${var.service_vars}"
   kms_key_id = "${aws_kms_key.config.arn}"
 }

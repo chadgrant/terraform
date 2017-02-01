@@ -1,43 +1,8 @@
-data "aws_vpc" "current" {
-
-  cidr_block = "${var.vpc_cidr}"
-
-  state="available"
-
-  tags{
-    "${var.tag_prefix}:environment" = "${var.environment}"
-  }
-}
-
-data "aws_security_group" "public" {
-  name = "${var.public_security_group}"
-
-  vpc_id = "${data.aws_vpc.current.id}"
-
-  tags{
-    "${var.tag_prefix}:environment" = "${var.environment}"
-  }
-}
-
-data "aws_subnet" "publics" {
-  availability_zone = "${element(split(",", var.aws_availability_zones), count.index)}"
-  vpc_id            = "${data.aws_vpc.current.id}"
-  state             = "available"
-
-  tags {
-    "Name" = "*-public-${element(split(",", var.aws_availability_zones), count.index)}"
-    "${var.tag_prefix}:environment" = "${var.environment}"
-  }
-
-  count = "${length(split(",", var.aws_availability_zones))}"
-}
-
-
 resource "aws_alb_target_group" "service" {
-  name     = "${var.environment_short_name}-${var.application}"
+  name     = "${var.name}"
   port     = "${var.host_port}"
   protocol = "HTTP"
-  vpc_id   = "${data.aws_vpc.current.id}"
+  vpc_id   = "${var.vpc_id}"
 
   deregistration_delay = 60
 
@@ -51,18 +16,19 @@ resource "aws_alb_target_group" "service" {
 }
 
 resource "aws_alb" "main" {
-  name            = "${var.environment_short_name}-${var.application}"
-  subnets         = ["${data.aws_subnet.publics.*.id}"]
-  security_groups = ["${data.aws_security_group.public.id}"]
+  name            = "${var.name}"
+  subnets         = ["${split(",", var.public_subnets)}"]
+  security_groups = ["${split(",", var.public_security_groups)}"]
 
   access_logs {
-    bucket="${var.bucket}"
-    prefix="logs/${var.application}"
+    bucket = "${var.bucket}"
+    prefix = "logs/${var.name}"
   }
 
   tags {
     "${var.tag_prefix}:environment"  = "${var.environment}"
-    "${var.tag_prefix}:application"  = "${var.application}"
+    "${var.tag_prefix}:service"      = "${var.service}"
+    "${var.tag_prefix}:team"         = "${var.team}"
   }
 }
 
