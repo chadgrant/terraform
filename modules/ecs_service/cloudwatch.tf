@@ -3,5 +3,5 @@ resource "aws_cloudwatch_log_group" "ecs" {
 }
 
 resource "aws_cloudwatch_log_group" "service" {
-  name = "${var.name}/service"
+  name = "${var.cloudwatch_log}"
 }

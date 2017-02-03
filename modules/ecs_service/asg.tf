@@ -9,7 +9,7 @@ resource "aws_autoscaling_group" "service" {
 
   tag {
     key   = "Name"
-    value = "ecs-${var.name}"
+    value = "${var.name}"
 
     propagate_at_launch = true
   }

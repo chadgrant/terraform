@@ -40,6 +40,7 @@ variable "task_count" {
   default = "2"
 }
 
+variable "cloudwatch_log"           {}
 variable "healthcheck_url"          { default = "/health/asg" }
 variable "dockerhub_username"       {}
 variable "dockerhub_email"          {}

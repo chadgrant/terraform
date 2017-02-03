@@ -15,10 +15,9 @@ data "template_file" "ecs_service" {
 }
 
 resource "aws_iam_role_policy" "ecs_service" {
-  name = "${var.name}-ecs-policy"
-  role = "${aws_iam_role.ecs_service.name}"
-
-  policy = "${data.template_file.ecs_service.rendered}"
+  name    = "${var.name}-ecs-policy"
+  role    = "${aws_iam_role.ecs_service.name}"
+  policy  = "${data.template_file.ecs_service.rendered}"
 
   provisioner "local-exec" {
     command = "sleep 140" #cheap hack to try and make up for IAM eventual consistency
@@ -49,7 +48,7 @@ data "template_file" "service_instance_profile" {
   template = "${file("${path.module}/iam/service-instance-profile-policy.json")}"
 
   vars {
-    app_log_group_arn         = "${aws_cloudwatch_log_group.service.arn}"
+    svc_log_group_arn         = "${aws_cloudwatch_log_group.service.arn}"
     ecs_log_group_arn         = "${aws_cloudwatch_log_group.ecs.arn}"
     aws_region                = "${var.aws_region}"
     environment               = "${var.environment}"

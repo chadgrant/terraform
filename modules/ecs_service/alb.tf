@@ -22,7 +22,7 @@ resource "aws_alb" "main" {
 
   access_logs {
     bucket = "${var.bucket}"
-    prefix = "logs/${var.name}"
+    prefix = "logs/${var.service}"
   }
 
   tags {
