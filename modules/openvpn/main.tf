@@ -20,7 +20,7 @@ data "aws_ami" "openvpn" {
 
   filter {
     name = "name"
-    values = ["OpenVPN Access Server"]
+    values = ["OpenVPN Access Server *"]
   }
 
   filter {

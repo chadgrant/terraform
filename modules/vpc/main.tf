@@ -2,6 +2,7 @@ variable "name"         {}
 variable "cidr"         {}
 variable "environment"  {}
 variable "tag_prefix"   {}
+variable "dns_search"   {}
 
 resource "aws_vpc" "vpc" {
   cidr_block           = "${var.cidr}"
@@ -10,7 +11,15 @@ resource "aws_vpc" "vpc" {
 
   tags {
     Name = "${var.name}"
+    "${var.tag_prefix}:environment" = "${var.environment}"
+  }
+}
 
+resource "aws_vpc_dhcp_options" "dhcp" {
+  domain_name = "${var.dns_search}"
+
+  tags {
+    Name = "${var.environment}"
     "${var.tag_prefix}:environment" = "${var.environment}"
   }
 }
